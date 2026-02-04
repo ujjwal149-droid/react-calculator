@@ -11,7 +11,7 @@ This project focuses on:
 ---
 
 ## 🚀 Live UI
-![Calculator Desktop UI](./screenshots/calculator-ui.png)
+![Calculator UI](./screenshots/calculator-ui.png)
 ---
 
 ## 🛠️ Tech Stack
@@ -44,7 +44,7 @@ This project focuses on:
 
 **Ujjawal Tyagi**
 
-- GitHub: [https://github.com/ujjawaltyagi](https://github.com/ujjawaltyagi)
+- GitHub: [https://github.com/ujjwal149-droid](https://github.com/ujjwal149-droid)
 
 ---
 

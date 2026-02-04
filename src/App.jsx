@@ -21,7 +21,7 @@ function App() {
           <strong>Ujjawal Tyagi</strong>
         </p>
         <a
-          href="https://github.com/ujjawaltyagi/react-calculator"
+          href="https://github.com/ujjwal149-droid/react-calculator"
           target="_blank"
           rel="noopener noreferrer"
         >
