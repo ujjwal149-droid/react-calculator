@@ -7,13 +7,14 @@ const isOperator = (val) => operators.includes(val);
 
 const Calculator = () => {
   const [result, setResult] = useState("");
-
+  const [justCalculated, setJustCalculated] = useState(false);
   function onButtonClick(e) {
     const value = e.target.innerHTML;
 
     // AC
     if (e.target.classList.contains("delete")) {
       setResult("");
+      setJustCalculated(false);
       return;
     }
 
@@ -21,22 +22,42 @@ const Calculator = () => {
     if (e.target.classList.contains("equals")) {
       if (!result || isOperator(result[result.length - 1])) return;
       setResult((prev) => calculate(prev));
+      setJustCalculated(true);
       return;
+    }
+
+    // input after =
+    if (justCalculated) {
+      // operator continues calculation
+      if (isOperator(value)) {
+        setJustCalculated(false);
+      }
+      // start new number (including decimal)
+      else {
+        setResult(value === "." ? "0." : value);
+        setJustCalculated(false);
+        return;
+      }
     }
 
     // decimal rules
     if (value === ".") {
       const parts = result.split(/[+\−×÷]/);
       const current = parts[parts.length - 1];
+
+      // start decimal as 0.
       if (!current) {
         setResult((prev) => prev + "0.");
         return;
       }
+      // prevent multiple decimals
       if (current.includes(".")) return;
     }
 
-    // prevent operator spam
+    // operator handling
     if (isOperator(value)) {
+      setJustCalculated(false);
+
       // prevent starting with operator
       if (!result) return;
 
