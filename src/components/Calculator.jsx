@@ -2,23 +2,57 @@ import React, { useState } from "react";
 import CalculatorKey from "./CalculatorKey.jsx";
 import "./Calculator.css";
 
+const operators = ["×", "+", "−", "÷"];
+const isOperator = (val) => operators.includes(val);
+
 const Calculator = () => {
   const [result, setResult] = useState("");
 
   function onButtonClick(e) {
-    console.log(e.target);
+    const value = e.target.innerHTML;
+
+    // AC
     if (e.target.classList.contains("delete")) {
       setResult("");
-    } else if (e.target.classList.contains("equals")) {
-      setResult(prev => calculate(prev));
-    } else {
-      setResult((prev) => prev + e.target.innerHTML);
+      return;
     }
+
+    // =
+    if (e.target.classList.contains("equals")) {
+      if (!result || isOperator(result[result.length - 1])) return;
+      setResult((prev) => calculate(prev));
+      return;
+    }
+
+    // decimal rules
+    if (value === ".") {
+      const parts = result.split(/[+\−×÷]/);
+      const current = parts[parts.length - 1];
+      if (!current) {
+        setResult((prev) => prev + "0.");
+        return;
+      }
+      if (current.includes(".")) return;
+    }
+
+    // prevent operator spam
+    if (isOperator(value)) {
+      // prevent starting with operator
+      if (!result) return;
+
+      // replace last operator
+      if (isOperator(result[result.length - 1])) {
+        setResult((prev) => prev.slice(0, -1) + value);
+        return;
+      }
+    }
+
+    setResult((prev) => prev + e.target.innerHTML);
   }
 
-  function calculate(exprerssion) {
+  function calculate(expression) {
     try {
-      const normalized = exprerssion
+      const normalized = expression
         .replace(/×/g, "*")
         .replace(/÷/g, "/")
         .replace(/−/g, "-");
@@ -27,7 +61,7 @@ const Calculator = () => {
     } catch {
       return "Error";
     }
-  };
+  }
   return (
     <div className="calculator-wrapper">
       <div className="result-section">
