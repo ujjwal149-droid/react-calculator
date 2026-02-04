@@ -34,17 +34,21 @@
   text-align: right;
   font-weight: 300;
   letter-spacing: 1px;
+  display: inline-flex;
+  align-items: flex-end;
+  font-weight: 300;
+  letter-spacing: 1px;
 }
 
 /* Cursor */
 .cursor {
+  display: inline-block;
   width: 2px;
-  height: 42px;
+  height: 1.2em;
+  margin-left: 2px;
   background-color: rgba(255, 255, 255, 0.85);
-  position: absolute;
-  right: 14px;
-  bottom: 18px;
   animation: blink 1.2s steps(1) infinite;
+  vertical-align: bottom;
 }
 
 @keyframes blink {

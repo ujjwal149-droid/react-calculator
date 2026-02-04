@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CalculatorKey from "./CalculatorKey.jsx";
 import "./Calculator.css";
 
@@ -6,8 +6,17 @@ const operators = ["×", "+", "−", "÷"];
 const isOperator = (val) => operators.includes(val);
 
 const Calculator = () => {
+  const displayRef = useRef(null);
+
   const [result, setResult] = useState("");
   const [justCalculated, setJustCalculated] = useState(false);
+
+  useEffect(() => {
+    if (displayRef.current) {
+      displayRef.current.scrollLeft = displayRef.current.scrollWidth;
+    }
+  }, [result]);
+
   function onButtonClick(e) {
     const value = e.target.innerHTML;
 
@@ -85,9 +94,10 @@ const Calculator = () => {
   }
   return (
     <div className="calculator-wrapper">
-      <div className="result-section">
-        <span className="cursor"></span>
-        <span className="result">{result}</span>
+      <div className="result-section" ref={displayRef}>
+        <span className="result">
+          {result} <span className="cursor"></span>
+        </span>
       </div>
       <div className="input-section">
         <CalculatorKey
